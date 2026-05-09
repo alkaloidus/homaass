@@ -11,7 +11,24 @@ services:
       - ${app_data}/home-assistant:/config
     restart: unless-stopped
     network_mode: "host"
-## will be handled by zigbee2mqtt 
-#    devices:
-#      - /dev/ttyACM0:/dev/ttyACM0 # old SONOFF stick
-#      - /dev/ttyUSB0:/dev/ttyUSB0 # sonoff zigbee 3.0 dongle plus 
+  ## will be handled by zigbee2mqtt 
+  #    devices:
+  #      - /dev/ttyACM0:/dev/ttyACM0 # old SONOFF stick
+  #      - /dev/ttyUSB0:/dev/ttyUSB0 # sonoff zigbee 3.0 dongle plus 
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: mosquitto
+    restart: always
+    depends_on:
+      - home-assistant
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=$tzone
+    volumes:
+      - ${app_data}/mosquitto:/mosquitto
+      - ${app_data}/mosquitto/data:/mosquitto/data
+      - ${app_data}/mosquitto/log:/mosquitto/log
+    ports:
+      - 1883:1883
+      - 9001:9001
