@@ -16,7 +16,7 @@ services:
   #      - /dev/ttyACM0:/dev/ttyACM0 # old SONOFF stick
   #      - /dev/ttyUSB0:/dev/ttyUSB0 # sonoff zigbee 3.0 dongle plus 
   mosquitto:
-    image: eclipse-mosquitto
+    image: eclipse-mosquitto:latest
     container_name: mosquitto
     restart: always
     depends_on:
